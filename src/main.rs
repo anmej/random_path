@@ -2,11 +2,9 @@ mod lib;
 use lib::*;
 
 fn main() {
-    hello();
-    let a = Point { x: 1, y: 1 };
-    let b = Point { x: 0, y: 0 };()
-    println!("{:?}", manhattan_distance(a, b));
-    println!("{:?}", is_neighbours(a, b));
-    let a = vec!();
-    
+    let a = Point { x: 0, y: 0 };
+    let b = Point { x: 4, y: 4 };
+    let mut state = PathBuilder::new(5, 5, a, b);
+    let c = Point { x: 1, y: 1 };
+    state.path.push(c);
 }
