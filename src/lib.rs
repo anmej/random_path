@@ -42,11 +42,23 @@ impl PathBuilder {
     }
 
     pub fn is_free(&self, point: Point) -> bool {
-        !self.blacklist.contains(&point) && !self.path.contains(&point) && self.is_valid(point)
+        // while path is too small, path.tend is not free
+        if self.path.len() < self.minimal_path_length as usize {
+            !self.blacklist.contains(&point) && !self.path.contains(&point) &&
+            self.is_valid(point) && point != self.end
+        } else {
+            !self.blacklist.contains(&point) && !self.path.contains(&point) && self.is_valid(point)
+        }
+
     }
     // point which is free and has 3 free neighbours (the 4th is the current path end)
     pub fn is_walkable(&self, point: Point) -> bool {
-        self.is_free(point) && self.get_free_neighbours(point).len() == 3
+        //path.end is always walkable when path is long enough
+        if point == self.end && self.path.len() > self.minimal_path_length as usize {
+            true
+        } else {
+            self.is_free(point) && self.get_free_neighbours(point).len() == 3
+        }
     }
 
     pub fn get_free_neighbours(&self, point: Point) -> Vec<Point> {
@@ -83,9 +95,17 @@ impl PathBuilder {
            is_neighbours(*self.path.last().unwrap(), self.end) {
             return false;
         }
-        let walkable_neighbours = self.get_walkable_neighbours(*self.path.last().unwrap()); 
-        let next_step = rand::thread_rng().choose(walkable_neighbours.as_slice());
-        self.path.push(next_step);
+        // self.path is never empty, new() pushes start into it
+        let walkable_neighbours = self.get_walkable_neighbours(*self.path.last().unwrap());
+        if walkable_neighbours.len() > 0 {
+            // choose one at random and advance
+            let next_step = rand::thread_rng().choose(walkable_neighbours.as_slice());
+            self.path.push(*next_step.unwrap());
+        } else {
+            // nowhere yt
+            unimplemented!()
+        }
+
 
         true
     }
