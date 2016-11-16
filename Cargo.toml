@@ -5,3 +5,4 @@ authors = ["ant"]
 
 [dependencies]
 rand = "0.3"
+tcod = "0.10"

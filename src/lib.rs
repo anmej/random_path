@@ -1,6 +1,10 @@
 extern crate rand;
 use self::rand::Rng;
 
+extern crate tcod;
+use self::tcod::console::*;
+use self::tcod::colors;
+
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct Point {
     pub x: i32,
@@ -66,7 +70,7 @@ impl PathBuilder {
         if point == self.end && self.path.len() > self.minimal_path_len as usize {
             true
         } else {
-            self.is_free(point) && self.get_free_neighbours(point).len() == 3
+            self.is_free(point) && self.get_free_neighbours(point).len() >= 3
         }
     }
 
@@ -124,7 +128,7 @@ impl PathBuilder {
             let next_step = rand::thread_rng().choose(walkable_neighbours.as_slice());
             self.path.push(*next_step.unwrap());
         } else {
-            // nowhere yt
+            // nowhere to go
             self.return_len += 1;
             for _ in 0..self.return_len {
                 let r = self.path.pop().unwrap();
@@ -133,6 +137,9 @@ impl PathBuilder {
             self.return_len = 1;
         }
         true
+    }
+    pub fn tcod_render() {
+
     }
 }
 
