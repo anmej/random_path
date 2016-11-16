@@ -7,15 +7,15 @@ use self::tcod::colors;
 
 fn main() {
     let a = Point { x: 1, y: 1 };
-    let b = Point { x: 8, y: 8 };
-    let mut state = PathBuilder::new(10, 10, 5, a, b);
-    for i in 0..100 {
+    let b = Point { x: 28, y: 4 };
+    let mut state = PathBuilder::new(30, 5, 5, a, b);
+    for i in 0..1000 {
         let x = state.walk();
         
         println!{"cycle: {}", i};
-        println!{"path: {:?}", state.path};
-        println!{"blacklist: {:?}", state.blacklist};
-        
+        // println!{"path: {:?}", state.path};
+        // println!{"blacklist: {:?}", state.blacklist};
+        println!{"{}", state};
         if !x {
             break;
         }

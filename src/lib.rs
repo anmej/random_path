@@ -5,6 +5,8 @@ extern crate tcod;
 use self::tcod::console::*;
 use self::tcod::colors;
 
+use std::fmt;
+
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct Point {
     pub x: i32,
@@ -23,13 +25,36 @@ pub struct PathBuilder {
     pub return_len: usize, // number of steps to retreat when dead-end
 }
 
+impl fmt::Display for PathBuilder {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for i in 0..self.heigth {
+            for j in 0..self.width {
+                let p = Point { x: j, y: i };
+                if self.start == p {
+                    write!(f, "S").ok();
+                } else if self.end == p {
+                    write!(f, "E").ok();
+                } else if self.path.contains(&p) {
+                    write!(f, "█").ok();
+                } else if self.blacklist.contains(&p) {
+                    write!(f, "x").ok();
+                } else {
+                    write!(f, "░").ok();
+                }
+            }
+            write!(f, "\n").ok();
+        }
+        write!(f, "____________________________")
+    }
+}
+
 impl PathBuilder {
     pub fn new(width: i32,
                heigth: i32,
                minimal_path_len: i32,
                start: Point,
                end: Point)
-               -> PathBuilder {  
+               -> PathBuilder {
         let mut b = PathBuilder {
             width: width,
             heigth: heigth,
@@ -42,7 +67,7 @@ impl PathBuilder {
         };
         if !b.is_valid(b.start) {
             panic!("Start point is invalid")
-        } 
+        }
         if !b.is_valid(b.end) {
             panic!("End point is invalid")
         }
@@ -111,12 +136,12 @@ impl PathBuilder {
         }
         // self.path is never empty, new() pushes start into it
 
-        println!("self.path: {:?}", self.path);
+        // println!("self.path: {:?}", self.path);
 
         let walkable_neighbours =
             self.get_walkable_neighbours(*self.path.last().expect("walk: self.path is empty 2"));
 
-        println!("walkable neighbours: {:?}", walkable_neighbours);
+        // println!("walkable neighbours: {:?}", walkable_neighbours);
 
         if walkable_neighbours.len() > 0 {
             if walkable_neighbours.len() == 1 {
@@ -138,9 +163,7 @@ impl PathBuilder {
         }
         true
     }
-    pub fn tcod_render() {
-
-    }
+    pub fn tcod_render() {}
 }
 
 pub fn manhattan_distance(a: Point, b: Point) -> i32 {
