@@ -134,6 +134,11 @@ impl PathBuilder {
                          self.end) {
             return false;
         }
+        // nowhere to go, no path - clear the board, start again
+        if self.path.len() <= 1 {
+            self.path.push(self.start);
+            self.blacklist.clear();
+        }
         // self.path is never empty, new() pushes start into it
 
         // println!("self.path: {:?}", self.path);
@@ -155,8 +160,11 @@ impl PathBuilder {
         } else {
             // nowhere to go
             self.return_len += 1;
+            if self.path.len() < self.return_len {
+                panic!("self.path.len() < self.return_len");
+            }
             for _ in 0..self.return_len {
-                let r = self.path.pop().unwrap();
+                let r = self.path.pop().expect("nothing to pop from self.path");
                 self.blacklist.push(r);
             }
             self.return_len = 1;
