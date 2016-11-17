@@ -6,17 +6,18 @@ use self::tcod::console::*;
 use self::tcod::colors;
 
 fn main() {
-    let a = Point { x: 1, y: 1 };
-    let b = Point { x: 48, y:28 };
-    let mut state = PathBuilder::new(50, 30, 5, a, b);
+    let a = Point { x: 0, y: 19 };
+    let b = Point { x: 99, y:0 };
+    let mut state = PathBuilder::new(100, 20, 10, a, b);
     let mut c = 0;
-    for i in 0..10000 {
+
+    for i in 0..100000 {
         let x = state.walk();
         c = i;
-        //println!{"cycle: {}", i};
+        // println!{"cycle: {}", i};
         // println!{"path: {:?}", state.path};
         // println!{"blacklist: {:?}", state.blacklist};
-        //println!{"{}", state};
+        // println!{"{}", state};
         if !x {
             break;
         }
@@ -30,5 +31,5 @@ fn main() {
     // state.path.push(Point{x: 4, y: 5});
     // println!{"f.n.: {:?}", state.get_free_neighbours(p)};
     // println!{"w.n.: {:?}", state.get_walkable_neighbours(p)};
-    
+
 }

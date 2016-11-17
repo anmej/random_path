@@ -80,12 +80,11 @@ impl PathBuilder {
     }
 
     pub fn is_free(&self, point: Point) -> bool {
-        // while path is too small, path.tend is not free
+        // while path is too small, path.end is not free
         if self.path.len() < self.minimal_path_len as usize {
-            !self.blacklist.contains(&point) && !self.path.contains(&point) &&
-            self.is_valid(point) && point != self.end
+            !self.blacklist.contains(&point) && !self.path.contains(&point) && point != self.end
         } else {
-            !self.blacklist.contains(&point) && !self.path.contains(&point) && self.is_valid(point)
+            !self.blacklist.contains(&point) && !self.path.contains(&point)
         }
 
     }
@@ -95,7 +94,8 @@ impl PathBuilder {
         if point == self.end && self.path.len() > self.minimal_path_len as usize {
             true
         } else {
-            self.is_free(point) && self.get_free_neighbours(point).len() >= 3
+            self.is_free(point) && self.is_valid(point) &&
+            self.get_free_neighbours(point).len() >= 3
         }
     }
 
