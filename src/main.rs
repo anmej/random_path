@@ -7,7 +7,7 @@ use self::tcod::colors;
 
 fn main() {
     let a = Point { x: 0, y: 19 };
-    let b = Point { x: 99, y:0 };
+    let b = Point { x: 99, y: 0 };
     let mut state = PathBuilder::new(100, 20, 10, a, b);
     let mut c = 0;
 
