@@ -6,6 +6,7 @@ retreats from (they are no longer walkable). If path length decreases to 0, the 
 Text output looks like this:
 
 cycle: 219
+
     ░░░░░██████░░░███░░░░░░░░░░░░░██████░░░░xxx░░░░xxx
     ░░░░██░░░░█░███░█░░░░░░░░░░████░░░░██░░xx░xx░░░x░x
     ░░░░█░░░░░███░░░███░░░░░░░░█░░░░░░░░██░x░░x░xxxxx░
