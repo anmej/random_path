@@ -6,9 +6,9 @@ use self::tcod::console::*;
 use self::tcod::colors;
 
 fn main() {
-    let a = Point { x: 0, y: 19 };
-    let b = Point { x: 99, y: 0 };
-    let mut state = PathBuilder::new(100, 20, 10, a, b);
+    let a = Point { x: 24, y: 5 };
+    let b = Point { x: 24, y: 4 };
+    let mut state = PathBuilder::new(50, 10, 10, a, b);
     let mut c = 0;
 
     for i in 0..100000 {
