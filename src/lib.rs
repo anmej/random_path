@@ -128,10 +128,11 @@ impl PathBuilder {
     }
 
     pub fn walk(&mut self) -> bool {
+        // returns false when the path is complete
+
         // end condition
         if self.path.len() >= self.minimal_path_len as usize &&
-           is_neighbours(*self.path.last().expect("walk: self.path is empty 1"),
-                         self.end) {
+           *self.path.last().expect("walk: self.path is empty 1") == self.end {
             return false;
         }
         // nowhere to go, no path - clear the board, start again
@@ -139,16 +140,12 @@ impl PathBuilder {
             self.path.push(self.start);
             self.blacklist.clear();
         }
-        // self.path is never empty, new() pushes start into it
-
-        // println!("self.path: {:?}", self.path);
 
         let walkable_neighbours =
             self.get_walkable_neighbours(*self.path.last().expect("walk: self.path is empty 2"));
 
-        // println!("walkable neighbours: {:?}", walkable_neighbours);
-
         if walkable_neighbours.len() > 0 {
+            // calculating the length of deterministic path
             if walkable_neighbours.len() == 1 {
                 self.return_len += 1;
             } else {
@@ -158,7 +155,7 @@ impl PathBuilder {
             let next_step = rand::thread_rng().choose(walkable_neighbours.as_slice());
             self.path.push(*next_step.unwrap());
         } else {
-            // nowhere to go
+            // dead end: retreating and blacklisting
             self.return_len += 1;
             if self.path.len() < self.return_len {
                 panic!("self.path.len() < self.return_len");
@@ -172,13 +169,4 @@ impl PathBuilder {
         true
     }
     pub fn tcod_render() {}
-}
-
-pub fn manhattan_distance(a: Point, b: Point) -> i32 {
-    (a.x - b.x).abs() + (a.y - b.y).abs()
-
-}
-
-pub fn is_neighbours(a: Point, b: Point) -> bool {
-    manhattan_distance(a, b) == 1
 }

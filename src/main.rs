@@ -6,24 +6,22 @@ use self::tcod::console::*;
 use self::tcod::colors;
 
 fn main() {
-    let a = Point { x: 24, y: 5 };
-    let b = Point { x: 24, y: 4 };
-    let mut state = PathBuilder::new(50, 10, 10, a, b);
-    let mut c = 0;
-
+    let a = Point { x: 15, y: 15 };
+    let b = Point { x: 16, y: 15 };
+    let mut state = PathBuilder::new(150, 55, 10, a, b);
     for i in 0..100000 {
         let x = state.walk();
-        c = i;
         // println!{"cycle: {}", i};
         // println!{"path: {:?}", state.path};
         // println!{"blacklist: {:?}", state.blacklist};
         // println!{"{}", state};
         if !x {
+        println!{"cycle: {}", i};
+        println!{"{}", state};
             break;
         }
     }
-    println!{"cycle: {}", c};
-    println!{"{}", state};
+
     // let p = Point{x: 1, y: 8};
     // state.path.push(p);
     // state.path.push(Point{x: 5, y: 6});
