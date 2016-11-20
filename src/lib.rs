@@ -100,7 +100,7 @@ impl PathBuilder {
     }
 
     pub fn get_free_neighbours(&self, point: Point) -> Vec<Point> {
-        let mut free_neighbours = vec![];
+        let mut free_neighbours = Vec::with_capacity(4);
         for (dx, dy) in [1, -1, 0, 0].iter().zip([0, 0, 1, -1].iter()) {
             let neighbour = Point {
                 x: point.x + dx,
@@ -114,7 +114,7 @@ impl PathBuilder {
     }
 
     pub fn get_walkable_neighbours(&self, point: Point) -> Vec<Point> {
-        let mut walkable_neighbours = vec![];
+        let mut walkable_neighbours = Vec::with_capacity(4);
         for (dx, dy) in [1, -1, 0, 0].iter().zip([0, 0, 1, -1].iter()) {
             let neighbour = Point {
                 x: point.x + dx,

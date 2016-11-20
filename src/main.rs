@@ -8,7 +8,7 @@ use self::tcod::colors;
 fn main() {
     let a = Point { x: 15, y: 15 };
     let b = Point { x: 16, y: 15 };
-    let mut state = PathBuilder::new(150, 55, 10, a, b);
+    let mut state = PathBuilder::new(20, 20, 10, a, b);
     for i in 0..100000 {
         let x = state.walk();
         // println!{"cycle: {}", i};
