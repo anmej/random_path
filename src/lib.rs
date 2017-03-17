@@ -1,9 +1,9 @@
 extern crate rand;
 use self::rand::Rng;
 
-extern crate tcod;
-use self::tcod::console::*;
-use self::tcod::colors;
+// extern crate tcod;
+// use self::tcod::console::*;
+// use self::tcod::colors;
 
 use std::fmt;
 
